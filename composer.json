@@ -23,7 +23,7 @@
     "sentry/sdk": "^4.0.0"
   },
   "require-dev": {
-    "contributte/logging": "^0.6.3",
+    "contributte/logging": "^0.6.3 || ^0.7.0",
     "http-interop/http-factory-guzzle": "^1.2.0",
     "contributte/qa": "^0.3.2",
     "contributte/tester": "^0.3 || ^0.4",
