@@ -2,11 +2,11 @@
 
 namespace Trejjam\Sentry\Logger;
 
-use Contributte\Logging\ILogger;
 use Sentry\Event;
 use Sentry\Severity;
 use Sentry\State\HubInterface;
 use Throwable;
+use Tracy\ILogger;
 
 final readonly class SentryLogger implements ILogger
 {
@@ -18,13 +18,13 @@ final readonly class SentryLogger implements ILogger
 	{
 	}
 
-	public function log(mixed $message, string $priority = ILogger::INFO): void
+	public function log(mixed $value, string $level = ILogger::INFO): void
 	{
 		if ($this->disabled) {
 			return;
 		}
 
-		$severity = $this->getSeverityFromPriority($priority);
+		$severity = $this->getSeverityFromPriority($level);
 
 		if ($severity === null) {
 			return;
@@ -34,30 +34,25 @@ final readonly class SentryLogger implements ILogger
 
 		$event->setLevel($severity);
 
-		if ($message instanceof Throwable) {
-			$this->hub->captureException($message);
+		if ($value instanceof Throwable) {
+			$this->hub->captureException($value);
 
 			return;
 		}
 
-		$event->setMessage((string) $message);
+		$event->setMessage((string) $value);
 
 		$this->hub->captureEvent($event);
 	}
 
-	private function getSeverityFromPriority(string $priority): ?Severity
+	private function getSeverityFromPriority(string $level): ?Severity
 	{
-		switch ($priority) {
-			case ILogger::WARNING:
-				return Severity::warning();
-			case ILogger::ERROR:
-				return Severity::error();
-			case ILogger::EXCEPTION:
-			case ILogger::CRITICAL:
-				return Severity::fatal();
-			default:
-				return null;
-		}
+		return match ($level) {
+			ILogger::WARNING => Severity::warning(),
+			ILogger::ERROR => Severity::error(),
+			ILogger::EXCEPTION, ILogger::CRITICAL => Severity::fatal(),
+			default => null,
+		};
 	}
 
 }
