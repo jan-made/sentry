@@ -15,7 +15,10 @@
 				<element key="tests/cases" value="Tests\Cases"/>
 				<element key="tests/fixtures" value="Tests\Fixtures"/>
 			</property>
-			<property name="extensions" type="array" value="php,phpt"/>
+			<property name="extensions" type="array">
+				<element key="php" value="php"/>
+				<element key="phpt" value="phpt"/>
+			</property>
 		</properties>
 	</rule>
 
