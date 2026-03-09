@@ -2,7 +2,6 @@
 
 namespace Trejjam\Sentry\DI;
 
-use Contributte\Logging\ILogger;
 use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
 use Nette\Schema\Expect;
@@ -12,6 +11,7 @@ use Sentry\ClientInterface;
 use Sentry\SentrySdk;
 use Sentry\State\Hub;
 use Sentry\State\HubInterface;
+use Tracy\ILogger;
 use Trejjam\Sentry\Logger\SentryLogger;
 
 final class SentryExtension extends CompilerExtension

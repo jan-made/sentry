@@ -17,3 +17,4 @@ jobs:
     with:
       php: "8.4"
       make: "coverage-clover"
+    secrets: inherit
