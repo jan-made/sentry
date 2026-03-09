@@ -1,6 +1,6 @@
 <p align=center>
   <a href="https://github.com/trejjam/sentry/actions"><img src="https://badgen.net/github/checks/trejjam/sentry/master?cache=300"></a>
-  <a href="https://coveralls.io/r/trejjam/sentry"><img src="https://badgen.net/coveralls/c/github/trejjam/sentry?cache=300"></a>
+  <a href="https://codecov.io/gh/trejjam/sentry"><img src="https://badgen.net/codecov/c/github/trejjam/sentry"></a>
   <a href="https://packagist.org/packages/trejjam/sentry"><img src="https://badgen.net/packagist/dm/trejjam/sentry"></a>
   <a href="https://packagist.org/packages/trejjam/sentry"><img src="https://badgen.net/packagist/v/trejjam/sentry"></a>
 </p>
