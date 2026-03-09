@@ -2,7 +2,7 @@
 
 namespace Trejjam\Sentry\DI;
 
-use Contributte\Logging\ILogger;
+use Tracy\ILogger;
 use Nette\DI\CompilerExtension;
 use Nette\PhpGenerator\ClassType;
 use Nette\Schema\Expect;
