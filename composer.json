@@ -1,5 +1,5 @@
 {
-  "name": "trejjam/sentry",
+  "name": "jan-made/sentry",
   "description": "Sentry integration into Nette framework",
   "keywords": [
     "nette",
@@ -9,13 +9,16 @@
   ],
   "type": "library",
   "license": "MIT",
-  "homepage": "https://github.com/trejjam/sentry",
+  "homepage": "https://github.com/jan-made/sentry",
   "authors": [
     {
       "name": "Jan Trejbal",
-      "homepage": "https://github.com/trejjam"
+      "homepage": "https://github.com/jan-made"
     }
   ],
+  "replace": {
+    "trejjam/sentry": "self.version"
+  },
   "require": {
     "php": "^8.2 || ^8.3 || ^8.4 || ^8.5",
     "nette/di": "^3.2.5",
