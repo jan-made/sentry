@@ -35,7 +35,7 @@
     "phpstan/phpstan-deprecation-rules": "^2.0.4",
     "phpstan/phpstan-nette": "^2.0.9",
     "phpstan/phpstan-strict-rules": "^2.0.10",
-    "tracy/tracy": "^2.11.3"
+    "tracy/tracy": "^2.11.4"
   },
   "suggest": {
     "http-interop/http-factory-guzzle": "Recomended Guzzle HTTP Factory",
