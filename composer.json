@@ -20,7 +20,7 @@
     "trejjam/sentry": "self.version"
   },
   "require": {
-    "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
+    "php": "~8.4.0 || ~8.5.0",
     "nette/di": "^3.2.8",
     "nette/schema": "^1.3.5",
     "sentry/sentry": "^4.26.0"
