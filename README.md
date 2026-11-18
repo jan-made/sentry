@@ -28,7 +28,7 @@ For details on how to use this package, check out our [documentation](.docs).
 
 | State  | Version    | Branch   | Nette | PHP            |
 |--------|------------|----------|-------|----------------|
-| dev    | `^0.2@dev` | `master` | 3.1+  | `^8.2`, `^8.3` |
+| dev    | `^0.2@dev` | `master` | 3.1+  | 8.2.x to 8.5.x |
 | stable | `^0.1`     | `master` | 3.0+  | `^7.4`, `^8.0` |
 
 ## Development
