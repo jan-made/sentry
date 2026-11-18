@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# CodeRabbit PR review settings. AGENTS.md and similar guideline files are read as the coding guidelines.
+language: en-US
+reviews:
+  profile: chill
+  high_level_summary: true
+  poem: false
+  in_progress_fortune: false
+  sequence_diagrams: false
+  review_status: true
+  collapse_walkthrough: true
+  enable_prompt_for_ai_agents: true
+  abort_on_close: true
+  auto_review:
+    enabled: true
+    drafts: true
+    auto_incremental_review: true
+    ignore_usernames:
+      - dependabot[bot]
+  finishing_touches:
+    autofix:
+      enabled: true
+    fix_ci:
+      enabled: true
+    resolve_merge_conflict:
+      enabled: true
+    unit_tests:
+      enabled: true
+    simplify:
+      enabled: true
+  pre_merge_checks:
+    title:
+      mode: warning
+    description:
+      mode: warning
+  path_filters:
+    - "!composer.lock"
+    - "!vendor/**"
+    - "!tests/temp/**"
+  path_instructions:
+    - path: "src/**/*.php"
+      instructions: "Nette integration for Sentry. Check the logger never drops or recursively logs exceptions, respects log levels, and does not send PII or secrets (DSN, user data) unless explicitly configured."
+    - path: "src/DI/**"
+      instructions: "Check config schema, defaults and service registration remain backward compatible; disabled/empty DSN must not break the app."
+    - path: "tests/**"
+      instructions: "Nette Tester tests; cover configuration edge cases and must not send events to a real Sentry DSN."
+knowledge_base:
+  code_guidelines:
+    enabled: true
+chat:
+  auto_reply: true
