@@ -29,7 +29,7 @@
     "http-interop/http-factory-guzzle": "^1.2.1",
     "contributte/qa": "^0.3.2 || ^0.4.0",
     "contributte/tester": "^0.4.1",
-    "nette/tester": "^2.6.0",
+    "nette/tester": "^2.7.0",
     "phpstan/extension-installer": "^1.4.3",
     "phpstan/phpstan": "^2.3.6",
     "phpstan/phpstan-deprecation-rules": "^2.0.4",
