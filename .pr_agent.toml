@@ -3,34 +3,40 @@
 # Options: https://github.com/The-PR-Agent/pr-agent/blob/v0.50.0/pr_agent/settings/configuration.toml
 
 [github_app]
-# Review draft pull requests too, and run /describe and /review again on every push.
+# Review draft pull requests too, and run /describe and /review again after each push by a person.
+# The PR-Agent host skips pull requests and pushes from bot accounts.
 feedback_on_draft_pr = true
 handle_push_trigger = true
 
 [pr_reviewer]
 num_max_findings = 5
 extra_instructions = """\
-Also check these rules:
+Repository rules. Check every rule in each area the diff touches. A changed line that breaks one is a finding, even when the code runs.
 
 Logger (`src/Logger/SentryLogger.php`):
-- `log()` runs inside Tracy's error handling. It never throws, never logs through Tracy itself, and sends nothing when `disabled` is true.
-- Throwables go to `captureException()`; other values become an `Event` message. Levels map only in `getSeverityFromPriority()`, and unmapped levels such as `info` and `debug` are dropped.
-- Events carry no user data, request data or DSN unless a config option enables it.
+- Flag a `throw` or a Tracy logger call added to `log()`: it runs inside Tracy's error handler.
 
 DI extension (`src/DI/`):
 - A new option is a typed property on `SentryExtensionConfiguration` with a default in `getConfigSchema()`, so existing configs compile unchanged.
-- Service names (`clientBuilder`, `client`, `sentryHub`, `sentrySdk`, `sentryLogger`) stay stable. `sentrySdk` and `sentryLogger` stay non-autowired so the app's own `ILogger` is not replaced.
-- `sentryLogger` is registered only when Tracy's `ILogger` exists; `tracy/tracy` stays a `suggest`. With `disabled` true, `afterCompile()` does not call `SentrySdk::setCurrentHub()`.
+- `sentrySdk` and `sentryLogger` stay non-autowired; an autowired `sentryLogger` replaces the app's own Tracy `ILogger`.
+- `sentryLogger` is registered only when Tracy's `ILogger` exists; `tracy/tracy` stays in `suggest`.
 
-Tests and QA:
-- A behaviour change in `SentryLogger` or `SentryExtension` comes with a Nette Tester case in `tests/cases/`. Tests never send events to a real Sentry DSN.
-- Changes pass `make phpstan` (level max) and `make cs` (`ruleset.xml`). PHPStan ignores stay inline with an identifier, as in `@phpstan-ignore cast.string`.
-- `composer.json` keeps `php` at `~8.4.0 || ~8.5.0` to match `.github/workflows/tests.yml`. A breaking change bumps `extra.branch-alias.dev-master` and the Versions table in `README.md`.
+Tests (`tests/`):
+- Test DSNs are placeholders such as `'dsn'`; a real Sentry DSN never appears in a test.
+
+Package:
+- With `disabled` true, `SentryLogger::log()` returns before it touches the hub, and `afterCompile()` does not call `SentrySdk::setCurrentHub()`.
+- Events never carry user data, request data or the DSN unless a config option enables it.
+- A new PHPStan ignore is an inline `@phpstan-ignore` with an error identifier, as `@phpstan-ignore cast.string` in `SentryLogger.php`.
+- A removed or renamed config option or service name (`clientBuilder`, `client`, `sentryHub`, `sentrySdk`, `sentryLogger`) is marked as breaking in the PR description.
+- A change to the `php` constraint in `composer.json` updates the Versions table in `README.md` in the same PR, and `.github/workflows/tests.yml` when the supported versions change.
 """
 
 [pr_code_suggestions]
 # Publish only suggestions scored 5 or higher (0-10).
 suggestions_score_threshold = 5
+# Drop a suggestion whose score could not be computed; the default 7 would publish it.
+score_on_reflection_failure = 4
 extra_instructions = "Prefer existing project helpers and patterns over new abstractions."
 
 [ignore]
