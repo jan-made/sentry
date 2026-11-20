@@ -1,8 +1,0 @@
-parameters:
-	ignoreErrors:
-		-
-			message: '~^PHPDoc type Trejjam\\Sentry\\DI\\SentryExtensionConfiguration of property Trejjam\\Sentry\\DI\\SentryExtension::\$config is not the same as PHPDoc type array\|object of overridden property Nette\\DI\\CompilerExtension::\$config\.$~'
-			path: %currentWorkingDirectory%/src/DI/SentryExtension.php
-		-
-			message: '~^Cannot cast mixed to string\.$~'
-			path: %currentWorkingDirectory%/src/Logger/SentryLogger.php
