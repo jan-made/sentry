@@ -18,7 +18,10 @@ final class SentryExtension extends CompilerExtension
 {
 
 	// phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-	/** @var SentryExtensionConfiguration */
+	/**
+	 * @var SentryExtensionConfiguration
+	 * @phpstan-ignore property.phpDocType
+	 */
 	protected $config;
 	// phpcs:enable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
 

@@ -40,6 +40,7 @@ final readonly class SentryLogger implements ILogger
 			return;
 		}
 
+		// @phpstan-ignore cast.string
 		$event->setMessage((string) $value);
 
 		$this->hub->captureEvent($event);

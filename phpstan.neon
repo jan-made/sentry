@@ -1,8 +1,1 @@
 parameters:
-	ignoreErrors:
-		-
-			identifier: property.phpDocType
-			path: %currentWorkingDirectory%/src/DI/SentryExtension.php
-		-
-			identifier: cast.string
-			path: %currentWorkingDirectory%/src/Logger/SentryLogger.php
