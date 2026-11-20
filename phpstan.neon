@@ -1,7 +1,7 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '~^PHPDoc type Trejjam\\Sentry\\DI\\SentryExtensionConfiguration of property Trejjam\\Sentry\\DI\\SentryExtension::\$config is not the same as PHPDoc type array(?:<string, mixed>)?\|object of overridden property Nette\\DI\\CompilerExtension::\$config\.$~'
+			identifier: property.phpDocType
 			path: %currentWorkingDirectory%/src/DI/SentryExtension.php
 		-
 			message: '~^Cannot cast mixed to string\.$~'
