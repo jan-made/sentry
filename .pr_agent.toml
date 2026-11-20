@@ -1,0 +1,46 @@
+# PR-Agent settings for this repository. PR-Agent reads this file from the
+# default branch (master).
+# Options: https://github.com/The-PR-Agent/pr-agent/blob/v0.50.0/pr_agent/settings/configuration.toml
+
+[github_app]
+# Review draft pull requests too, and run /describe and /review again after each push by a person.
+# The PR-Agent host skips pull requests and pushes from bot accounts.
+feedback_on_draft_pr = true
+handle_push_trigger = true
+
+[pr_reviewer]
+num_max_findings = 5
+extra_instructions = """\
+Repository rules. Check every rule in each area the diff touches. A changed line that breaks one is a finding, even when the code runs.
+
+Logger (`src/Logger/SentryLogger.php`):
+- Flag a `throw` or a Tracy logger call added to `log()`: it runs inside Tracy's error handler.
+
+DI extension (`src/DI/`):
+- A new option is a typed property on `SentryExtensionConfiguration` with a default in `getConfigSchema()`, so existing configs compile unchanged.
+- `sentrySdk` and `sentryLogger` stay non-autowired; an autowired `sentryLogger` replaces the app's own Tracy `ILogger`.
+- `sentryLogger` is registered only when Tracy's `ILogger` exists; `tracy/tracy` stays in `suggest`.
+
+Tests (`tests/`):
+- Test DSNs are placeholders such as `'dsn'`; a real Sentry DSN never appears in a test.
+
+Package:
+- With `disabled` true, `SentryLogger::log()` returns before it touches the hub, and `afterCompile()` does not call `SentrySdk::setCurrentHub()`.
+- Events never carry user data, request data or the DSN unless a config option enables it.
+- A new PHPStan ignore is an inline `@phpstan-ignore` with an error identifier, as `@phpstan-ignore cast.string` in `SentryLogger.php`.
+- A removed or renamed config option or service name (`clientBuilder`, `client`, `sentryHub`, `sentrySdk`, `sentryLogger`) is marked as breaking in the PR description.
+- A change to the `php` constraint in `composer.json` updates the Versions table in `README.md` in the same PR, and `.github/workflows/tests.yml` when the supported versions change.
+"""
+
+[pr_code_suggestions]
+# Publish only suggestions scored 5 or higher (0-10).
+suggestions_score_threshold = 5
+# Drop a suggestion whose score could not be computed; the default 7 would publish it.
+score_on_reflection_failure = 4
+extra_instructions = "Prefer existing project helpers and patterns over new abstractions."
+
+[ignore]
+# Generated code and lock files. Replaces the default list; keep vendor/** first.
+glob = [
+    "vendor/**",
+]
