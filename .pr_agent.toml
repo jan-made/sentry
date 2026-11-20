@@ -1,0 +1,40 @@
+# PR-Agent settings for this repository. PR-Agent reads this file from the
+# default branch (master).
+# Options: https://github.com/The-PR-Agent/pr-agent/blob/v0.50.0/pr_agent/settings/configuration.toml
+
+[github_app]
+# Review draft pull requests too, and run /describe and /review again on every push.
+feedback_on_draft_pr = true
+handle_push_trigger = true
+
+[pr_reviewer]
+num_max_findings = 5
+extra_instructions = """\
+Also check these rules:
+
+Logger (`src/Logger/SentryLogger.php`):
+- `log()` runs inside Tracy's error handling. It never throws, never logs through Tracy itself, and sends nothing when `disabled` is true.
+- Throwables go to `captureException()`; other values become an `Event` message. Levels map only in `getSeverityFromPriority()`, and unmapped levels such as `info` and `debug` are dropped.
+- Events carry no user data, request data or DSN unless a config option enables it.
+
+DI extension (`src/DI/`):
+- A new option is a typed property on `SentryExtensionConfiguration` with a default in `getConfigSchema()`, so existing configs compile unchanged.
+- Service names (`clientBuilder`, `client`, `sentryHub`, `sentrySdk`, `sentryLogger`) stay stable. `sentrySdk` and `sentryLogger` stay non-autowired so the app's own `ILogger` is not replaced.
+- `sentryLogger` is registered only when Tracy's `ILogger` exists; `tracy/tracy` stays a `suggest`. With `disabled` true, `afterCompile()` does not call `SentrySdk::setCurrentHub()`.
+
+Tests and QA:
+- A behaviour change in `SentryLogger` or `SentryExtension` comes with a Nette Tester case in `tests/cases/`. Tests never send events to a real Sentry DSN.
+- Changes pass `make phpstan` (level max) and `make cs` (`ruleset.xml`). PHPStan ignores stay inline with an identifier, as in `@phpstan-ignore cast.string`.
+- `composer.json` keeps `php` at `~8.4.0 || ~8.5.0` to match `.github/workflows/tests.yml`. A breaking change bumps `extra.branch-alias.dev-master` and the Versions table in `README.md`.
+"""
+
+[pr_code_suggestions]
+# Publish only suggestions scored 5 or higher (0-10).
+suggestions_score_threshold = 5
+extra_instructions = "Prefer existing project helpers and patterns over new abstractions."
+
+[ignore]
+# Generated code and lock files. Replaces the default list; keep vendor/** first.
+glob = [
+    "vendor/**",
+]
