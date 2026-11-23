@@ -23,7 +23,7 @@
     "php": "~8.4.0 || ~8.5.0",
     "nette/di": "^3.2.8",
     "nette/schema": "^1.4.0",
-    "sentry/sentry": "^4.37.0"
+    "sentry/sentry": "^4.38.0"
   },
   "require-dev": {
     "http-interop/http-factory-guzzle": "^1.2.1",
