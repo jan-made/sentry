@@ -31,7 +31,7 @@
     "contributte/tester": "^0.4.1",
     "nette/tester": "^2.7.0",
     "phpstan/extension-installer": "^1.4.3",
-    "phpstan/phpstan": "^2.3.6",
+    "phpstan/phpstan": "^2.3.7",
     "phpstan/phpstan-deprecation-rules": "^2.0.5",
     "phpstan/phpstan-nette": "^2.0.15",
     "phpstan/phpstan-strict-rules": "^2.1.1",
